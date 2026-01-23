@@ -1,0 +1,29 @@
+{
+  "version": "6.0.0",
+  "essentialLocalModels": [
+    {
+      "file": "athlete-run-optimized.glb",
+      "role": "animated player",
+      "approxBytes": 671320,
+      "notes": "Meshopt-compressed runner with quantized attributes and embedded WebP color; rig and running animation retained."
+    }
+  ],
+  "generatedRuntimeAssets": [
+    "optimized gold Rush coin",
+    "weathered concrete barrier",
+    "maintenance gate",
+    "traffic cone cluster"
+  ],
+  "optionalCC0Models": [
+    "building-small-a.glb",
+    "building-small-b.glb",
+    "building-small-c.glb",
+    "building-small-d.glb",
+    "building-garage.glb",
+    "grass-trees-tall.glb",
+    "road-straight-lightposts.glb",
+    "ToyCar.glb"
+  ],
+  "delivery": "procedural defaults; optional local vendoring; public remote fallback only when VITE_REMOTE_ASSETS=true",
+  "localVendoringCommand": "npm run fetch-assets"
+}

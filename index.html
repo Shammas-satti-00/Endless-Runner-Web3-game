@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#03090d" />
+    <meta name="description" content="Subway Rush - a cinematic Web3 endless runner built with Three.js." />
+    <title>Subway Rush - Urban Legends</title>
+  </head>
+  <body data-phase="menu" data-weather="after-rain">
+    <div id="app">
+      <div id="game-root" aria-label="Subway Rush game canvas"></div>
+      <div class="cinematic-grade" aria-hidden="true"></div>
+      <div class="after-rain-atmosphere" aria-hidden="true"></div>
+      <div class="speed-vignette" aria-hidden="true"></div>
+
+      <main id="menu" class="screen screen--active menu-screen" aria-label="Main menu">
+        <div class="menu-backdrop" aria-hidden="true"></div>
+        <div class="menu-vignette" aria-hidden="true"></div>
+
+        <header class="menu-topbar">
+          <button class="network-chip glass-cut" data-open-panel="wallet" type="button" aria-label="Open wallet panel">
+            <span class="network-chip__mark">S</span>
+            <span class="network-chip__copy">
+              <strong id="network-status-text"><i></i> NOT CONNECTED</strong>
+              <small>NETWORK: <b id="network-name">GUEST MODE</b></small>
+            </span>
+          </button>
+
+          <button class="menu-account glass-cut" data-open-panel="wallet" type="button" aria-label="Wallet account">
+            <span class="coin-icon">$</span>
+            <span><strong id="menu-balance">0.0000 ETH</strong><small id="menu-address">CONNECT WALLET</small></span>
+          </button>
+        </header>
+
+        <div class="menu-logo" aria-label="Subway Rush - Web3 endless runner">
+          <span class="menu-logo__top">SUBWAY</span>
+          <b class="menu-logo__bottom">RUSH</b>
+          <small>WEB3 ENDLESS RUNNER</small>
+        </div>
+
+        <section class="menu-season glass-cut" aria-label="Season status">
+          <span class="season-badge">S1</span>
+          <span><small>SEASON 1</small><strong>URBAN LEGENDS</strong><em>LIVE EVENT</em></span>
+        </section>
+
+        <nav class="menu-actions" aria-label="Main navigation">
+          <button id="start-btn" class="menu-action menu-action--primary" type="button">
+            <span class="menu-action__icon">▶</span><span>PLAY</span>
+          </button>
+          <button class="menu-action" data-open-panel="wallet" type="button">
+            <span class="menu-action__icon">▣</span><span>WALLET</span>
+          </button>
+          <button class="menu-action" data-open-panel="leaderboard" type="button">
+            <span class="menu-action__icon">♜</span><span>LEADERBOARD</span>
+          </button>
+          <button class="menu-action" data-open-panel="settings" type="button">
+            <span class="menu-action__icon">⚙</span><span>SETTINGS</span>
+          </button>
+        </nav>
+
+        <div class="menu-footer glass-cut">
+          <span>FOLLOW &amp; EARN</span><b></b><span>X</span><b></b><span>DISCORD</span><b></b><span>TELEGRAM</span><b></b><span>WEB</span>
+        </div>
+        <small class="version-copy">VERSION 1.0.0</small>
+      </main>
+
+      <header class="game-hud" aria-live="polite">
+        <section class="score-card hud-cut">
+          <small>SCORE</small>
+          <strong id="score">000,000</strong>
+          <span id="multiplier">x1.0</span>
+        </section>
+
+        <section class="mission-card hud-cut">
+          <span class="mission-card__icon">✥</span>
+          <span class="mission-card__copy"><strong>Run 2500m in one run</strong><small><b id="mission-distance">0</b> / 2500</small></span>
+          <span class="mission-card__bar"><i id="mission-progress"></i></span>
+        </section>
+
+        <section class="wallet-score hud-cut">
+          <span class="coin-icon">$</span><strong id="coin-count">0</strong>
+        </section>
+        <button id="pause-btn" class="pause-btn hud-cut" type="button" aria-label="Pause game">Ⅱ</button>
+
+        <section class="season-card hud-cut">
+          <span><small>SEASON 1</small><strong>URBAN LEGENDS</strong><b>♛ <i id="best-score">000,000</i></b></span>
+          <em>S1</em>
+        </section>
+
+        <section class="energy-meter" aria-label="Runner energy">
+          <span class="energy-meter__bolt">ϟ</span>
+          <span class="energy-meter__track"><i id="energy-level"></i></span>
+          <span class="energy-meter__shoe">⌁</span>
+        </section>
+
+        <button class="wallet-chip hud-cut" data-open-panel="wallet" type="button">
+          <i id="hud-wallet-dot"></i><strong id="hud-wallet-status">GUEST MODE</strong><b></b><span id="hud-wallet-address">CONNECT WALLET</span><em>S1</em>
+        </button>
+
+        <div id="action-feedback" class="action-feedback hud-cut" aria-live="polite"></div>
+      </header>
+
+      <section id="pause-screen" class="screen overlay-screen" aria-hidden="true">
+        <div class="overlay-card hud-cut">
+          <p class="eyebrow">RUN PAUSED</p>
+          <h2>HOLD YOUR LINE</h2>
+          <p>Your run is preserved. Resume when the route is clear.</p>
+          <div class="overlay-actions">
+            <button id="resume-btn" class="gold-btn" type="button">RESUME</button>
+            <button class="cyan-btn" data-return-menu type="button">MAIN MENU</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="game-over" class="screen game-over-screen" aria-hidden="true">
+        <div class="game-over-copy">
+          <div class="mini-logo"><span>SUBWAY</span><b>RUSH</b><small>WEB3 ENDLESS RUNNER</small></div>
+          <h2>GAME<br />OVER</h2>
+          <p id="game-over-reason">YOU RAN OUT OF ENERGY</p>
+          <label class="runner-name">ENTER YOUR RUNNER NAME<input id="runner-name" type="text" value="SpeedDemon_7" maxlength="24" /></label>
+          <section class="best-card hud-cut"><small>★ BEST SCORE</small><strong id="best-result">000,000</strong></section>
+          <div class="overlay-actions">
+            <button id="restart-btn" class="cyan-btn" type="button">↻ RETRY</button>
+            <button id="sign-score-btn" class="gold-btn" type="button">SAVE SCORE</button>
+            <button id="claim-rewards-btn" class="gold-btn" type="button">CLAIM REWARDS</button>
+            <button class="dark-btn" data-return-menu type="button">MAIN MENU</button>
+          </div>
+        </div>
+
+        <div class="run-summary hud-cut">
+          <p class="eyebrow">RUN SUMMARY</p>
+          <div class="summary-grid">
+            <span><small>FINAL SCORE</small><strong id="final-score">000,000</strong><em id="final-multiplier">x1.0 MULTIPLIER</em></span>
+            <span><small>COINS COLLECTED</small><strong><i class="coin-icon">$</i> <b id="final-coins">0</b></strong><em>x1 BONUS</em></span>
+            <span><small>DISTANCE</small><strong id="final-distance">0 m</strong><em id="record-copy">NEW RECORD!</em></span>
+          </div>
+          <div class="summary-missions">
+            <h3>MISSIONS</h3>
+            <div><span>ϟ</span><p>Run 2500m in one run<i><b id="summary-distance">0</b> / 2500</i></p><em id="summary-distance-status">IN PROGRESS</em></div>
+            <div><span class="coin-icon">$</span><p>Collect 100 coins<i><b id="summary-coins">0</b> / 100</i></p><em id="summary-coins-status">IN PROGRESS</em></div>
+            <div><span>⌁</span><p>Slide under 15 obstacles<i><b id="summary-slides">0</b> / 15</i></p><em id="summary-slides-status">IN PROGRESS</em></div>
+          </div>
+          <div id="signature-status" class="signature-status">Connect a wallet to sign and verify this run.</div>
+          <p id="run-summary" class="sr-only">Distance 0 m</p>
+        </div>
+      </section>
+
+      <section id="info-modal" class="screen modal-screen" aria-hidden="true">
+        <div class="modal-backdrop" aria-hidden="true"></div>
+        <header class="modal-chrome" aria-label="Subway Rush navigation">
+          <div class="modal-brand"><span>SUBWAY</span><b>RUSH</b><small>WEB3 ENDLESS RUNNER</small></div>
+          <nav class="modal-nav">
+            <button id="modal-play-btn" type="button">PLAY</button>
+            <button data-open-panel="wallet" type="button">WALLET</button>
+            <button data-open-panel="loadout" type="button">LOADOUT</button>
+            <button data-open-panel="missions" type="button">MISSIONS</button>
+            <button data-open-panel="leaderboard" type="button">LEADERBOARD</button>
+            <button data-open-panel="store" type="button">STORE</button>
+            <button data-open-panel="settings" type="button">SETTINGS</button>
+          </nav>
+          <span class="modal-currency"><i class="coin-icon">$</i><b id="modal-coin-count">0</b></span>
+        </header>
+        <div class="modal-shell hud-cut">
+          <button id="modal-close" class="modal-close" type="button" aria-label="Close">×</button>
+          <div id="modal-content"></div>
+        </div>
+      </section>
+
+      <nav class="mobile-controls" aria-label="Touch controls">
+        <button data-action="left" type="button" aria-label="Move left">←</button>
+        <button data-action="jump" type="button" aria-label="Jump">↑</button>
+        <button data-action="slide" type="button" aria-label="Slide under obstacle">↓</button>
+        <button data-action="right" type="button" aria-label="Move right">→</button>
+      </nav>
+
+      <div id="status" class="status" role="status">Loading city...</div>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
