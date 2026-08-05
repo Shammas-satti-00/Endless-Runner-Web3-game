@@ -515,3 +515,5 @@ npm run fetch-assets
 
 Public-model fallback is disabled by default. Project-generated procedural
 assets remain the immediate runtime path.
+#   E n d l e s s - R u n n e r - W e b 3 - g a m e  
+ 
